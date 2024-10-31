@@ -1,29 +1,10 @@
-import { Sequelize } from "sequelize-typescript";
 import Customer from "../../../../domain/customer/entity/customer";
-import CustomerModel from "../../../../infra/customer/repository/sequelize/customer.model";
 import CustomerRepository from "../../../../infra/customer/repository/sequelize/customer.repository";
 import Address from "../../../../value-object/address";
 import { IInputFindCustomerDto, IOutputFindCustomerDto } from "./find-customer.dto";
 import { FindCustomerUseCase } from "./find-customer.use-case";
 
-describe("should find a customer", () => {
-  let sequelize: Sequelize;
-  
-  beforeEach(async () => {
-    sequelize = new Sequelize({
-      dialect: "sqlite",
-      storage: ":memory:",
-      logging: false,
-      sync: { force: true },
-    });
-
-    await sequelize.addModels([CustomerModel]);
-    await sequelize.sync();
-  });
-
-  afterEach(async () => {
-    await sequelize.close();
-  });
+describe("Unit test", () => {
   test("should be find a customer with use case", async() => {
     const customerRepository = new CustomerRepository();
     const usecase = new FindCustomerUseCase(customerRepository)
