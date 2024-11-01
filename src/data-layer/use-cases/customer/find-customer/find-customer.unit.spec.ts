@@ -27,7 +27,7 @@ describe("Unit test", () => {
     const usecase = new FindCustomerUseCase(customerRepository)
 
     const input: IInputFindCustomerDto = {
-      id: 'any'
+      id: 'anyy'
     }
 
     const output: IOutputFindCustomerDto = {
@@ -43,5 +43,21 @@ describe("Unit test", () => {
 
     const result = await usecase.execute(input) 
     expect(result).toStrictEqual(output)
+  })
+
+  test("should return exception if customer not found", async() => {
+    const customerRepository = mockRepository();
+    customerRepository.find.mockImplementation(() => {
+      throw new Error("Customer not found")
+    })
+    const usecase = new FindCustomerUseCase(customerRepository)
+
+    const input: IInputFindCustomerDto = {
+      id: ''
+    }
+
+    expect(() => {
+      return usecase.execute(input) 
+    }).rejects.toThrow("Customer not found")
   })
 })
