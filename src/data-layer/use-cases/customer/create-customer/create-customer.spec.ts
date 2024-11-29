@@ -3,10 +3,9 @@ import CustomerModel from "../../../../infra/customer/repository/sequelize/custo
 import CustomerRepository from "../../../../infra/customer/repository/sequelize/customer.repository";
 import { IOutputFindCustomerDto } from "../find-customer/find-customer.dto";
 import { CreateCustomerUseCase } from "./create-customer.use-case";
-
-describe("Should be create a customer" , () => {
+describe("Should be create a customer", () => {
   let sequelize: Sequelize;
-  
+
   beforeEach(async () => {
     sequelize = new Sequelize({
       dialect: "sqlite",
@@ -23,29 +22,29 @@ describe("Should be create a customer" , () => {
     await sequelize.close();
   });
   test("usecase to create customer", async () => {
-    const repository = new CustomerRepository()
+    const repository = new CustomerRepository();
     const customerCreated = {
       id: "any_id",
-      name: 'any_name',
+      name: "any_name",
       address: {
-        street: 'any',
+        street: "any",
         number: 1,
-        city: 'any',
-        zip: 'any',
-      }
-    }
-    const usecase = new CreateCustomerUseCase(repository)
-    const response = await usecase.execute(customerCreated)
+        city: "any",
+        zip: "any",
+      },
+    };
+    const usecase = new CreateCustomerUseCase(repository);
+    const response = await usecase.execute(customerCreated);
     const output: IOutputFindCustomerDto = {
-      id: "any_id",
-      name: 'any_name',
+      id: response.id,
+      name: "any_name",
       address: {
-        street: 'any',
+        street: "any",
         number: 1,
-        city: 'any',
-        zip: 'any',
-      }
-    }
-    expect(response).toStrictEqual(output)
-  })
-})
+        city: "any",
+        zip: "any",
+      },
+    };
+    expect(response).toStrictEqual(output);
+  });
+});

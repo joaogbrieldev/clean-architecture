@@ -1,63 +1,61 @@
 import Customer from "../../../../domain/customer/entity/customer";
 import Address from "../../../../value-object/address";
-import { IInputFindCustomerDto, IOutputFindCustomerDto } from "./find-customer.dto";
+import {
+  IInputFindCustomerDto,
+  IOutputFindCustomerDto,
+} from "./find-customer.dto";
 import { FindCustomerUseCase } from "./find-customer.use-case";
 
-const customerCreate = new Customer('any','any')
-const address: Address = new Address(
-  'any',
-  1,
-  'any',
-  'any',
-    )
-customerCreate.changeAddress(address)
+const customerCreate = new Customer("any", "any");
+const address: Address = new Address("any", 1, "any", "any");
+customerCreate.changeAddress(address);
 
 const mockRepository = () => {
   return {
     find: jest.fn().mockReturnValue(customerCreate),
     findAll: jest.fn(),
     create: jest.fn(),
-    update: jest.fn()
-  }
-}
+    update: jest.fn(),
+  };
+};
 
 describe("Unit test", () => {
-  test("should be find a customer with use case", async() => {
+  test("should be find a customer with use case", async () => {
     const customerRepository = mockRepository();
-    const usecase = new FindCustomerUseCase(customerRepository)
+    const usecase = new FindCustomerUseCase(customerRepository);
 
     const input: IInputFindCustomerDto = {
-      id: 'anyy'
-    }
+      id: "any",
+    };
 
     const output: IOutputFindCustomerDto = {
       id: input.id,
-      name: 'any',
+      name: "any",
       address: {
-        street: 'any',
+        street: "any",
         number: 1,
-        city: 'any',
-        zip: 'any',
-      }
-    }
+        city: "any",
+        zip: "any",
+      },
+    };
 
-    const result = await usecase.execute(input) 
-    expect(result).toStrictEqual(output)
-  })
+    const result = await usecase.execute(input);
+    expect(result).toStrictEqual(output);
+  });
 
-  test("should return exception if customer not found", async() => {
+  test("should return exception if customer not found", async () => {
     const customerRepository = mockRepository();
     customerRepository.find.mockImplementation(() => {
-      throw new Error("Customer not found")
-    })
-    const usecase = new FindCustomerUseCase(customerRepository)
+      throw new Error("Customer not found");
+    });
+    const usecase = new FindCustomerUseCase(customerRepository);
 
     const input: IInputFindCustomerDto = {
-      id: ''
-    }
+      id: "",
+    };
 
     expect(() => {
-      return usecase.execute(input) 
-    }).rejects.toThrow("Customer not found")
-  })
-})
+      return usecase.execute(input);
+    }).rejects.toThrow("Customer not found");
+  });
+});

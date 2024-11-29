@@ -1,6 +1,6 @@
 export interface IInputFindCustomerDto {
   id: string;
-};
+}
 
 export interface IOutputFindCustomerDto {
   id: string;
@@ -10,5 +10,5 @@ export interface IOutputFindCustomerDto {
     city: string;
     number: number;
     zip: string;
-  }
-};
+  };
+}

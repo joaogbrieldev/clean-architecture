@@ -1,5 +1,5 @@
-import { Order } from "../../checkout/orders/order";
-import { OrderItem } from "../../checkout/orders/orderItem";
+import Order from "../../checkout/orders/order";
+import OrderItem from "../../checkout/orders/orderItem";
 import Customer from "../../customer/entity/customer";
 import OrderService from "./order.service";
 
